@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة تسعير سلة - GOLF STUDIO</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <span class="header-brand">GOLF STUDIO</span>
+            </div>
+            <div class="header-main">
+                <h1 class="header-title">حاسبة تسعير سلة</h1>
+                <p class="header-subtitle">احسب سعر البيع الصحيح بعد الرسوم والشحن</p>
+            </div>
+        </header>
+
+        <!-- Main Card -->
+        <main class="card">
+            <!-- Info Bar -->
+            <section class="info-bar">
+                <div class="info-item">
+                    <label>رقم الحاسبة</label>
+                    <span id="calculatorId">SL-20260226-0001</span>
+                </div>
+                <div class="info-item">
+                    <label>تاريخ اليوم</label>
+                    <span id="todayDate">26/02/2026</span>
+                </div>
+                <div class="info-item">
+                    <label>ملاحظة</label>
+                    <span class="note">النتيجة تقديرية حسب إعدادات الرسوم المدخلة</span>
+                </div>
+            </section>
+
+            <!-- Fee Settings Section -->
+            <section class="section">
+                <h2 class="section-title">إعدادات الرسوم</h2>
+                <div class="fee-settings">
+                    <div class="fee-row">
+                        <label for="madaFee">رسوم مدى (%)</label>
+                        <input type="number" id="madaFee" min="0" max="100" step="0.1" value="1">
+                    </div>
+                    <div class="fee-row">
+                        <label for="visaFee">رسوم فيزا/ماستر (%)</label>
+                        <input type="number" id="visaFee" min="0" max="100" step="0.1" value="2.2">
+                    </div>
+                    <div class="fee-row">
+                        <label for="stcFee">رسوم STC Pay (%)</label>
+                        <input type="number" id="stcFee" min="0" max="100" step="0.1" value="1.3">
+                    </div>
+                    <div class="fee-row">
+                        <label for="tabbyFee">رسوم تابي (%)</label>
+                        <input type="number" id="tabbyFee" min="0" max="100" step="0.1" value="3.5">
+                    </div>
+                    <div class="fee-row">
+                        <label for="tamaraFee">رسوم تمارا (%)</label>
+                        <input type="number" id="tamaraFee" min="0" max="100" step="0.1" value="3.5">
+                    </div>
+                    <div class="fee-row">
+                        <label for="fixedFee">الرسوم الثابتة (ريال)</label>
+                        <input type="number" id="fixedFee" min="0" step="0.01" value="1">
+                    </div>
+                    <div class="fee-row">
+                        <label for="vatRate">ضريبة على الرسوم (%)</label>
+                        <input type="number" id="vatRate" min="0" max="100" step="0.1" value="15">
+                    </div>
+                </div>
+
+                <!-- Mada Cap Section -->
+                <div class="mada-cap-section">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="madaCapEnabled">
+                        <span>تفعيل سقف رسوم مدى</span>
+                    </label>
+                    <div id="madaCapContainer" class="mada-cap-container" style="display: none;">
+                        <div class="fee-row">
+                            <label for="madaCap">سقف رسوم مدى (ريال)</label>
+                            <input type="number" id="madaCap" min="0" step="0.01" value="200">
+                        </div>
+                        <p class="help-text">يتم تطبيق السقف على جزء رسوم مدى فقط</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Data Section -->
+            <section class="section">
+                <h2 class="section-title">بيانات المنتج</h2>
+                <div class="product-data">
+                    <div class="fee-row">
+                        <label for="cogs">تكلفة المنتج عليك (ريال)</label>
+                        <input type="number" id="cogs" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="fee-row">
+                        <label for="shipping">تكلفة الشحن المتوقعة (ريال)</label>
+                        <input type="number" id="shipping" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="fee-row">
+                        <label for="targetProfit">الربح الصافي المستهدف (ريال)</label>
+                        <input type="number" id="targetProfit" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+                <button class="btn-secondary" id="defaultValuesBtn">قيم افتراضية</button>
+            </section>
+
+            <!-- Payment Method Section -->
+            <section class="section">
+                <h2 class="section-title">توزيع طرق الدفع</h2>
+                
+                <!-- Single Method Option -->
+                <div class="payment-method-group">
+                    <label class="radio-label">
+                        <input type="radio" name="paymentMode" value="single" checked>
+                        <span>اختيار طريقة واحدة</span>
+                    </label>
+                    <div id="singleMethodContainer" class="single-method-container">
+                        <div class="method-options">
+                            <label class="radio-label">
+                                <input type="radio" name="singleMethod" value="mada" checked>
+                                <span>مدى</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="singleMethod" value="visa">
+                                <span>فيزا/ماستر</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="singleMethod" value="stc">
+                                <span>STC Pay</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="singleMethod" value="tabby">
+                                <span>تابي</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="singleMethod" value="tamara">
+                                <span>تمارا</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Mix Option -->
+                <div class="payment-method-group">
+                    <label class="radio-label">
+                        <input type="radio" name="paymentMode" value="mix">
+                        <span>متوسط موزون (Recommended)</span>
+                    </label>
+                    <div id="mixMethodContainer" class="mix-method-container" style="display: none;">
+                        <div class="mix-inputs">
+                            <div class="mix-row">
+                                <label for="madaShare">نسبة مدى (%)</label>
+                                <input type="number" id="madaShare" min="0" max="100" step="0.1" value="40">
+                            </div>
+                            <div class="mix-row">
+                                <label for="visaShare">نسبة فيزا/ماستر (%)</label>
+                                <input type="number" id="visaShare" min="0" max="100" step="0.1" value="30">
+                            </div>
+                            <div class="mix-row">
+                                <label for="stcShare">نسبة STC Pay (%)</label>
+                                <input type="number" id="stcShare" min="0" max="100" step="0.1" value="10">
+                            </div>
+                            <div class="mix-row">
+                                <label for="tabbyShare">نسبة تابي (%)</label>
+                                <input type="number" id="tabbyShare" min="0" max="100" step="0.1" value="10">
+                            </div>
+                            <div class="mix-row">
+                                <label for="tamaraShare">نسبة تمارا (%)</label>
+                                <input type="number" id="tamaraShare" min="0" max="100" step="0.1" value="10">
+                            </div>
+                        </div>
+                        <div id="shareError" class="error-message"></div>
+                        <button class="btn-secondary" id="normalizeBtn">تسوية تلقائية</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section class="section result-section">
+                <h2 class="section-title">سعر البيع المقترح في سلة</h2>
+                <div class="result-box">
+                    <div class="result-price">
+                        <span id="recommendedPrice">0.00</span>
+                        <span class="currency">ريال</span>
+                    </div>
+                    <div class="result-details">
+                        <div class="detail-row">
+                            <span>إجمالي الرسوم:</span>
+                            <span id="totalFeesDisplay">0.00 ريال</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>صافي الربح:</span>
+                            <span id="netProfitDisplay">0.00 ريال</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>هامش الربح:</span>
+                            <span id="marginDisplay">0.00%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fee Breakdown Section -->
+            <section class="section">
+                <h2 class="section-title">تفصيل الرسوم</h2>
+                <div class="fee-breakdown-table">
+                    <div class="table-row header-row">
+                        <div class="table-cell">البند</div>
+                        <div class="table-cell">القيمة</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">نسبة الرسوم الموزونة</div>
+                        <div class="table-cell"><span id="weightedFeePercent">0.00</span>%</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">رسوم بوابة الدفع</div>
+                        <div class="table-cell"><span id="gatewayFees">0.00</span> ريال</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">الرسوم الثابتة</div>
+                        <div class="table-cell"><span id="fixedFeeDisplay">0.00</span> ريال</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">ضريبة الرسوم 15%</div>
+                        <div class="table-cell"><span id="feeTax">0.00</span> ريال</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">الشحن</div>
+                        <div class="table-cell"><span id="shippingDisplay">0.00</span> ريال</div>
+                    </div>
+                    <div class="table-row total-row">
+                        <div class="table-cell">الإجمالي المستقطع</div>
+                        <div class="table-cell"><span id="totalDeducted">0.00</span> ريال</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-primary" id="calculateBtn">حساب السعر</button>
+                <button class="btn-secondary" id="resetBtn">إعادة ضبط</button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-brand">GOLF STUDIO</div>
+            <div class="footer-contact">
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <span>السعودية</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span>info@golfstudio.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <span>+966 50 000 0000</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
