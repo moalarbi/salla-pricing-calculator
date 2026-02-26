@@ -16,158 +16,110 @@
             </div>
             <div class="header-main">
                 <h1 class="header-title">حاسبة تسعير سلة</h1>
-                <p class="header-subtitle">احسب سعر البيع الصحيح بعد الرسوم والشحن</p>
+                <p class="header-subtitle">3 أسئلة بسيطة → سعر البيع المقترح</p>
             </div>
         </header>
 
         <!-- Main Card -->
         <main class="card">
-
-
-            <!-- Fee Settings Section -->
-            <section class="section">
-                <h2 class="section-title">إعدادات الرسوم</h2>
-                <div class="fee-settings">
-                    <div class="fee-row">
-                        <label for="madaFee">رسوم مدى (%)</label>
-                        <input type="number" id="madaFee" min="0" max="100" step="0.1" value="1">
-                    </div>
-                    <div class="fee-row">
-                        <label for="visaFee">رسوم فيزا/ماستر (%)</label>
-                        <input type="number" id="visaFee" min="0" max="100" step="0.1" value="2.2">
-                    </div>
-                    <div class="fee-row">
-                        <label for="stcFee">رسوم STC Pay (%)</label>
-                        <input type="number" id="stcFee" min="0" max="100" step="0.1" value="1.3">
-                    </div>
-                    <div class="fee-row">
-                        <label for="tabbyFee">رسوم تابي (%)</label>
-                        <input type="number" id="tabbyFee" min="0" max="100" step="0.1" value="3.5">
-                    </div>
-                    <div class="fee-row">
-                        <label for="tamaraFee">رسوم تمارا (%)</label>
-                        <input type="number" id="tamaraFee" min="0" max="100" step="0.1" value="3.5">
-                    </div>
-                    <div class="fee-row">
-                        <label for="fixedFee">الرسوم الثابتة (ريال)</label>
-                        <input type="number" id="fixedFee" min="0" step="0.01" value="1">
-                    </div>
-                    <div class="fee-row">
-                        <label for="vatRate">ضريبة على الرسوم (%)</label>
-                        <input type="number" id="vatRate" min="0" max="100" step="0.1" value="15">
-                    </div>
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-item active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">المنتج</div>
                 </div>
+                <div class="step-item" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">الشحن</div>
+                </div>
+                <div class="step-item" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">الربح</div>
+                </div>
+            </div>
 
-                <!-- Mada Cap Section -->
-                <div class="mada-cap-section">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="madaCapEnabled">
-                        <span>تفعيل سقف رسوم مدى</span>
-                    </label>
-                    <div id="madaCapContainer" class="mada-cap-container" style="display: none;">
-                        <div class="fee-row">
-                            <label for="madaCap">سقف رسوم مدى (ريال)</label>
-                            <input type="number" id="madaCap" min="0" step="0.01" value="200">
-                        </div>
-                        <p class="help-text">يتم تطبيق السقف على جزء رسوم مدى فقط</p>
+            <!-- Step 1: Product Cost -->
+            <section class="step-section active" data-step="1">
+                <div class="step-header">
+                    <h2 class="step-title">كم دفعت لشراء المنتج؟</h2>
+                    <p class="step-subtitle">سعر المنتج عندك من المورد</p>
+                </div>
+                <div class="step-content">
+                    <div class="input-group">
+                        <label for="productCost">سعر المنتج (ريال)</label>
+                        <input type="number" id="productCost" min="0" step="0.01" placeholder="أدخل السعر">
+                        <div class="input-hint">💡 هذا هو السعر الذي دفعته لشراء المنتج</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Product Data Section -->
-            <section class="section">
-                <h2 class="section-title">بيانات المنتج</h2>
-                <div class="product-data">
-                    <div class="fee-row">
-                        <label for="cogs">تكلفة المنتج عليك (ريال)</label>
-                        <input type="number" id="cogs" min="0" step="0.01" placeholder="0.00">
-                    </div>
-                    <div class="fee-row">
-                        <label for="shipping">تكلفة الشحن المتوقعة (ريال)</label>
-                        <input type="number" id="shipping" min="0" step="0.01" value="0">
-                    </div>
-                    <div class="fee-row">
-                        <label for="targetProfit">الربح الصافي المستهدف (ريال)</label>
-                        <input type="number" id="targetProfit" min="0" step="0.01" value="0">
-                    </div>
+            <!-- Step 2: Shipping Cost -->
+            <section class="step-section" data-step="2">
+                <div class="step-header">
+                    <h2 class="step-title">كم تكلفة التوصيل؟</h2>
+                    <p class="step-subtitle">اتركه فارغ إذا كان الشحن على العميل</p>
                 </div>
-                <button class="btn-secondary" id="defaultValuesBtn">قيم افتراضية</button>
-            </section>
-
-            <!-- Payment Method Section -->
-            <section class="section">
-                <h2 class="section-title">توزيع طرق الدفع</h2>
-                
-                <!-- Single Method Option -->
-                <div class="payment-method-group">
-                    <label class="radio-label">
-                        <input type="radio" name="paymentMode" value="single" checked>
-                        <span>اختيار طريقة واحدة</span>
-                    </label>
-                    <div id="singleMethodContainer" class="single-method-container">
-                        <div class="method-options">
-                            <label class="radio-label">
-                                <input type="radio" name="singleMethod" value="mada" checked>
-                                <span>مدى</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="singleMethod" value="visa">
-                                <span>فيزا/ماستر</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="singleMethod" value="stc">
-                                <span>STC Pay</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="singleMethod" value="tabby">
-                                <span>تابي</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="singleMethod" value="tamara">
-                                <span>تمارا</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Payment Mix Option -->
-                <div class="payment-method-group">
-                    <label class="radio-label">
-                        <input type="radio" name="paymentMode" value="mix">
-                        <span>متوسط موزون (Recommended)</span>
-                    </label>
-                    <div id="mixMethodContainer" class="mix-method-container" style="display: none;">
-                        <div class="mix-inputs">
-                            <div class="mix-row">
-                                <label for="madaShare">نسبة مدى (%)</label>
-                                <input type="number" id="madaShare" min="0" max="100" step="0.1" value="40">
-                            </div>
-                            <div class="mix-row">
-                                <label for="visaShare">نسبة فيزا/ماستر (%)</label>
-                                <input type="number" id="visaShare" min="0" max="100" step="0.1" value="30">
-                            </div>
-                            <div class="mix-row">
-                                <label for="stcShare">نسبة STC Pay (%)</label>
-                                <input type="number" id="stcShare" min="0" max="100" step="0.1" value="10">
-                            </div>
-                            <div class="mix-row">
-                                <label for="tabbyShare">نسبة تابي (%)</label>
-                                <input type="number" id="tabbyShare" min="0" max="100" step="0.1" value="10">
-                            </div>
-                            <div class="mix-row">
-                                <label for="tamaraShare">نسبة تمارا (%)</label>
-                                <input type="number" id="tamaraShare" min="0" max="100" step="0.1" value="10">
-                            </div>
-                        </div>
-                        <div id="shareError" class="error-message"></div>
-                        <button class="btn-secondary" id="normalizeBtn">تسوية تلقائية</button>
+                <div class="step-content">
+                    <div class="input-group">
+                        <label for="shippingCost">تكلفة التوصيل (ريال) - اختياري</label>
+                        <input type="number" id="shippingCost" min="0" step="0.01" placeholder="0" value="0">
+                        <div class="input-hint">💡 تكلفة الشحن المتوقعة لكل طلب</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Result Section -->
-            <section class="section result-section">
-                <h2 class="section-title">سعر البيع المقترح في سلة</h2>
+            <!-- Step 3: Profit -->
+            <section class="step-section" data-step="3">
+                <div class="step-header">
+                    <h2 class="step-title">كم ربح تريد تحقيقه؟</h2>
+                    <p class="step-subtitle">اختر الطريقة التي تفضلها</p>
+                </div>
+                <div class="step-content">
+                    <!-- Profit Mode Toggle -->
+                    <div class="profit-mode-toggle">
+                        <button class="mode-btn active" data-mode="percentage">نسبة مئوية</button>
+                        <button class="mode-btn" data-mode="amount">مبلغ ثابت</button>
+                    </div>
+
+                    <!-- Percentage Mode -->
+                    <div class="profit-mode" id="percentageMode">
+                        <div class="slider-group">
+                            <label for="profitSlider">اختر نسبة الربح</label>
+                            <input type="range" id="profitSlider" min="5" max="100" value="20" step="5">
+                            <div class="slider-value">
+                                <span id="profitValue">20</span>%
+                            </div>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" data-value="10">10%</button>
+                            <button class="preset-btn" data-value="20">20%</button>
+                            <button class="preset-btn active" data-value="30">30%</button>
+                            <button class="preset-btn" data-value="40">40%</button>
+                        </div>
+                    </div>
+
+                    <!-- Amount Mode -->
+                    <div class="profit-mode" id="amountMode" style="display: none;">
+                        <div class="input-group">
+                            <label for="profitAmount">مبلغ الربح (ريال)</label>
+                            <input type="number" id="profitAmount" min="0" step="0.01" placeholder="أدخل مبلغ الربح المطلوب">
+                            <div class="input-hint">💡 مبلغ الربح الثابت لكل طلب</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Buttons -->
+            <div class="step-navigation">
+                <button class="nav-btn prev-btn" id="prevBtn" style="display: none;">السابق</button>
+                <button class="nav-btn next-btn" id="nextBtn">التالي</button>
+            </div>
+
+            <!-- Result Card -->
+            <section class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h2>سعر البيع المقترح في سلة</h2>
+                </div>
                 <div class="result-box">
                     <div class="result-price">
                         <span id="recommendedPrice">0.00</span>
@@ -188,65 +140,102 @@
                         </div>
                     </div>
                 </div>
+                <button class="btn-reset" id="resetBtn">إعادة ضبط</button>
             </section>
 
-            <!-- Fee Breakdown Section -->
-            <section class="section">
-                <h2 class="section-title">تفصيل الرسوم</h2>
-                <div class="fee-breakdown-table">
-                    <div class="table-row header-row">
-                        <div class="table-cell">البند</div>
-                        <div class="table-cell">القيمة</div>
+            <!-- Advanced Settings (Hidden by Default) -->
+            <section class="advanced-section">
+                <button class="advanced-toggle" id="advancedToggle">
+                    <span>⚙️ إعدادات متقدمة</span>
+                    <span class="toggle-icon">▼</span>
+                </button>
+                
+                <div class="advanced-content" id="advancedContent" style="display: none;">
+                    <!-- Fee Settings -->
+                    <div class="advanced-group">
+                        <h3 class="advanced-title">رسوم طرق الدفع</h3>
+                        <div class="fee-grid">
+                            <div class="fee-item">
+                                <label for="madaFee">مدى (%)</label>
+                                <input type="number" id="madaFee" min="0" max="100" step="0.1" value="1">
+                            </div>
+                            <div class="fee-item">
+                                <label for="visaFee">فيزا/ماستر (%)</label>
+                                <input type="number" id="visaFee" min="0" max="100" step="0.1" value="2.2">
+                            </div>
+                            <div class="fee-item">
+                                <label for="stcFee">STC Pay (%)</label>
+                                <input type="number" id="stcFee" min="0" max="100" step="0.1" value="1.3">
+                            </div>
+                            <div class="fee-item">
+                                <label for="tabbyFee">تابي (%)</label>
+                                <input type="number" id="tabbyFee" min="0" max="100" step="0.1" value="3.5">
+                            </div>
+                            <div class="fee-item">
+                                <label for="tamaraFee">تمارا (%)</label>
+                                <input type="number" id="tamaraFee" min="0" max="100" step="0.1" value="3.5">
+                            </div>
+                            <div class="fee-item">
+                                <label for="fixedFee">رسوم ثابتة (ريال)</label>
+                                <input type="number" id="fixedFee" min="0" step="0.01" value="1">
+                            </div>
+                            <div class="fee-item">
+                                <label for="vatRate">ضريبة الرسوم (%)</label>
+                                <input type="number" id="vatRate" min="0" max="100" step="0.1" value="15">
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-row">
-                        <div class="table-cell">نسبة الرسوم الموزونة</div>
-                        <div class="table-cell"><span id="weightedFeePercent">0.00</span>%</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-cell">رسوم بوابة الدفع</div>
-                        <div class="table-cell"><span id="gatewayFees">0.00</span> ريال</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-cell">الرسوم الثابتة</div>
-                        <div class="table-cell"><span id="fixedFeeDisplay">0.00</span> ريال</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-cell">ضريبة الرسوم 15%</div>
-                        <div class="table-cell"><span id="feeTax">0.00</span> ريال</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-cell">الشحن</div>
-                        <div class="table-cell"><span id="shippingDisplay">0.00</span> ريال</div>
-                    </div>
-                    <div class="table-row total-row">
-                        <div class="table-cell">الإجمالي المستقطع</div>
-                        <div class="table-cell"><span id="totalDeducted">0.00</span> ريال</div>
+
+                    <!-- Payment Mix Settings -->
+                    <div class="advanced-group">
+                        <button class="payment-mix-toggle" id="paymentMixToggle">
+                            <span>تعديل طرق الدفع</span>
+                            <span class="toggle-icon">▼</span>
+                        </button>
+                        <div class="payment-mix-content" id="paymentMixContent" style="display: none;">
+                            <p class="mix-info">توزيع طرق الدفع الموزون (يجب أن يساوي 100%)</p>
+                            <div class="mix-grid">
+                                <div class="mix-item">
+                                    <label for="madaShare">مدى (%)</label>
+                                    <input type="number" id="madaShare" min="0" max="100" step="0.1" value="40">
+                                </div>
+                                <div class="mix-item">
+                                    <label for="visaShare">فيزا/ماستر (%)</label>
+                                    <input type="number" id="visaShare" min="0" max="100" step="0.1" value="30">
+                                </div>
+                                <div class="mix-item">
+                                    <label for="stcShare">STC Pay (%)</label>
+                                    <input type="number" id="stcShare" min="0" max="100" step="0.1" value="10">
+                                </div>
+                                <div class="mix-item">
+                                    <label for="tabbyShare">تابي (%)</label>
+                                    <input type="number" id="tabbyShare" min="0" max="100" step="0.1" value="10">
+                                </div>
+                                <div class="mix-item">
+                                    <label for="tamaraShare">تمارا (%)</label>
+                                    <input type="number" id="tamaraShare" min="0" max="100" step="0.1" value="10">
+                                </div>
+                            </div>
+                            <div id="shareError" class="error-message"></div>
+                            <button class="btn-normalize" id="normalizeBtn">تسوية تلقائية</button>
+                        </div>
                     </div>
                 </div>
             </section>
-
-            <!-- Action Buttons -->
-            <div class="action-buttons">
-                <button class="btn-primary" id="calculateBtn">حساب السعر</button>
-                <button class="btn-secondary" id="resetBtn">إعادة ضبط</button>
-            </div>
         </main>
 
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-brand">GOLF STUDIO</div>
             <div class="footer-contact">
-                <a href="https://www.Golf-Studio.umso.co" target="_blank" class="contact-item contact-link">
-                    <span class="contact-icon">🌐</span>
-                    <span>www.Golf-Studio.umso.co</span>
+                <a href="https://www.Golf-Studio.umso.co" target="_blank" class="contact-item">
+                    <span>🌐 www.Golf-Studio.umso.co</span>
                 </a>
-                <a href="mailto:Golf.Studio.Adv@gmail.com" class="contact-item contact-link">
-                    <span class="contact-icon">✉️</span>
-                    <span>Golf.Studio.Adv@gmail.com</span>
+                <a href="mailto:Golf.Studio.Adv@gmail.com" class="contact-item">
+                    <span>✉️ Golf.Studio.Adv@gmail.com</span>
                 </a>
-                <a href="https://wa.me/966537311886" target="_blank" class="contact-item contact-link">
-                    <span class="contact-icon">📱</span>
-                    <span>0537311886</span>
+                <a href="https://wa.me/966537311886" target="_blank" class="contact-item">
+                    <span>📱 0537311886</span>
                 </a>
             </div>
         </footer>
