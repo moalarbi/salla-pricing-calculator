@@ -416,11 +416,13 @@ body {
     padding: 15px;
     font-size: 13px;
     font-weight: 500;
+    color: var(--text-dark);
 }
 
 .header-row .table-cell {
     font-weight: 600;
     text-align: center;
+    color: var(--white);
 }
 
 .table-row:nth-child(even) {
@@ -439,6 +441,7 @@ body {
 .total-row .table-cell {
     font-weight: 700;
     font-size: 14px;
+    color: var(--white);
 }
 
 /* ============================================
