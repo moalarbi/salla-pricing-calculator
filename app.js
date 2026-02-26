@@ -7,7 +7,6 @@ class PricingCalculator {
         this.initializeElements();
         this.loadFromLocalStorage();
         this.attachEventListeners();
-        this.initializeDate();
         this.calculate();
     }
 
@@ -65,9 +64,7 @@ class PricingCalculator {
         this.defaultValuesBtn = document.getElementById('defaultValuesBtn');
         this.normalizeBtn = document.getElementById('normalizeBtn');
 
-        // Info
-        this.calculatorId = document.getElementById('calculatorId');
-        this.todayDate = document.getElementById('todayDate');
+
     }
 
     attachEventListeners() {
@@ -114,18 +111,7 @@ class PricingCalculator {
         this.normalizeBtn.addEventListener('click', () => this.normalizeShares());
     }
 
-    initializeDate() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        
-        this.todayDate.textContent = `${day}/${month}/${year}`;
-        
-        // Generate Calculator ID
-        const random = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-        this.calculatorId.textContent = `SL-${year}${month}${day}-${random}`;
-    }
+
 
     updatePaymentModeUI(mode) {
         if (mode === 'single') {
